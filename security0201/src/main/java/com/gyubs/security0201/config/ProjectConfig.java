@@ -14,17 +14,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class ProjectConfig {
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        // var user = User.withUsername("john")
-        //         .password("12345")
-        //         .authorities("read")
-        //         .build();
-        return new InMemoryUserDetailsManager(User.withUsername("gyub")
-                .password("12345")
-                .authorities("read")
-                .build());
-    }
+    // @Bean
+    // UserDetailsService userDetailsService() {
+    //     // var user = User.withUsername("john")
+    //     //         .password("12345")
+    //     //         .authorities("read")
+    //     //         .build();
+    //     return new InMemoryUserDetailsManager(User.withUsername("gyub")
+    //             .password("12345")
+    //             .authorities("read")
+    //             .build());
+    // }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,10 +36,14 @@ public class ProjectConfig {
             throws Exception {
 
         http.httpBasic(Customizer.withDefaults());
-
         http.authorizeHttpRequests(
-                c -> c.anyRequest().permitAll()
+                c -> c.anyRequest().authenticated()
         );
+
+        http.userDetailsService(new InMemoryUserDetailsManager(User.withUsername("gyub")
+                .password("12345")
+                .authorities("read")
+                .build()));
 
         return http.build();
     }
