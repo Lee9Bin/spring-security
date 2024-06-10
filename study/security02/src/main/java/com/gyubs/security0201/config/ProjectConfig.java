@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Configuration
@@ -68,10 +70,8 @@ public class ProjectConfig {
     //     return http.build();
     // }
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails u = new User("gyub", "12345", "read");
-        List<UserDetails> users = List.of(u);
-        return new InMemoryUserDetailsService(users);
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean
