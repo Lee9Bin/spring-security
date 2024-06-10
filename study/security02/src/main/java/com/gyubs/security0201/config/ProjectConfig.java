@@ -1,16 +1,15 @@
 package com.gyubs.security0201.config;
 
-import com.gyubs.security0201.security.CustomAuthenticationProvider;
+import com.gyubs.security0201.model.User;
+import com.gyubs.security0201.service.InMemoryUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
 public class ProjectConfig {
@@ -68,4 +67,15 @@ public class ProjectConfig {
     //
     //     return http.build();
     // }
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails u = new User("gyub", "12345", "read");
+        List<UserDetails> users = List.of(u);
+        return new InMemoryUserDetailsService(users);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 }
