@@ -1,7 +1,7 @@
 package com.gyubs.filter;
 
 import jakarta.servlet.*;
-import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.server.csrf.CsrfToken;
 
 import java.io.IOException;
 import java.util.logging.Logger;
